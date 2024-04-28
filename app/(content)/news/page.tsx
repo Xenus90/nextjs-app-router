@@ -1,11 +1,13 @@
-import { DUMMY_NEWS } from "@/dummy-data";
 import NewsList from "@/components/news-list";
+import { getAllNews } from "@/lib/news";
 
-export default function News() {
+export default async function News() {
+  const news = await getAllNews();
+
   return (
     <>
-      <h1>NEWS</h1>
-      <NewsList news={DUMMY_NEWS} />
+      <h1>News</h1>
+      <NewsList news={news} />
     </>
   );
 }

@@ -1,8 +1,7 @@
-"use client";
-
-import { DUMMY_NEWS } from "@/dummy-data";
+import { ModalBackdrop } from "@/components/modal-backdrop";
+import { getNewsItem } from "@/lib/news";
 import Image from "next/image";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -10,10 +9,8 @@ type Props = {
   }
 };
 
-export default function ImagePage(props: Props) {
-  const router = useRouter();
-  const { params } = props;
-  const newsItem = DUMMY_NEWS.find(news => news.slug === params.slug);
+export default async function ImagePage(props: Props) {
+  const newsItem = await getNewsItem(props.params.slug);
 
   if (!newsItem) {
     notFound();
@@ -21,7 +18,7 @@ export default function ImagePage(props: Props) {
 
   return (
     <>
-      <div className="modal-backdrop" onClick={router.back} />
+      <ModalBackdrop />
       <dialog className="modal" open>
         <div className="fullscreen-image">
           <Image src={`/images/news/${newsItem.image}`} alt={newsItem.title} width={200} height={200} />

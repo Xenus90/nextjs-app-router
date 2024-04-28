@@ -1,4 +1,4 @@
-import { DUMMY_NEWS } from "@/dummy-data";
+import { getNewsItem } from "@/lib/news";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,8 +9,8 @@ type Props = {
   }
 };
 
-export default function NewsDetails({ params }: Props) {
-  const newsItem = DUMMY_NEWS.find(news => news.slug === params.slug);
+export default async function NewsDetails({ params }: Props) {
+  const newsItem = await getNewsItem(params.slug);
 
   if (!newsItem) {
     notFound();
